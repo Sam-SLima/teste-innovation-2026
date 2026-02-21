@@ -2,10 +2,10 @@
 
 import { useProdutos } from "@/hooks/useProdutos";
 import { useDebounce } from "@/lib/useDebounce";
-import { SearchInput } from "@/components/inputSearch";
 import { ProductCard } from "@/components/productCard";
 import { Modal } from "@/components/modal";
-
+import { Header } from "@/components/header";
+import { formatPrice } from "@/lib/format";
 import { useState } from "react";
 
 const ProdutosPage = () => {
@@ -15,42 +15,32 @@ const ProdutosPage = () => {
 
   const debouncedBusca = useDebounce(busca, 400);
 
-  const { data, isLoading, isError, refetch } = useProdutos({
+  const { data, isLoading, isError } = useProdutos({
     nome_produto: debouncedBusca,
     codigo_produto: debouncedBusca,
   });
 
-  if (isLoading) return <p>Carregando produtos...</p>;
-
-  if (isError)
-    return (
-      <p>
-        Erro ao carregar produtos.
-        <button onClick={() => refetch()}>Tentar novamente</button>
-      </p>
-    );
-
-  console.log("produto:", produtoSelecionado);
+  if (isLoading) return <p>Carregando...</p>;
+  if (isError) return <p>Erro ao carregar</p>;
 
   return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold mb-4">Produtos</h1>
+    <div className="min-h-screen bg-[#f4f6f9]">
+      <Header />
 
-      <SearchInput value={busca} onChange={setBusca} />
+      <div className="max-w-[1320px] mx-auto px-8 py-12">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-10">
+          {data?.map((produto: any) => (
+            <ProductCard
+              key={produto.codigo}
+              produto={produto}
+              onOpen={() => {
+                setProdutoSelecionado(produto);
+                setIsOpen(true);
+              }}
+            />
+          ))}
+        </div>
 
-      {data?.length === 0 && <p>Nenhum produto encontrado.</p>}
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {data?.map((produto: any) => (
-          <ProductCard
-            key={produto.codigo}
-            produto={produto}
-            onOpen={() => {
-              setProdutoSelecionado(produto);
-              setIsOpen(true);
-            }}
-          />
-        ))}
         <Modal
           isOpen={isOpen}
           onClose={() => {
@@ -60,23 +50,26 @@ const ProdutosPage = () => {
         >
           {produtoSelecionado && (
             <>
-              <h2 className="text-xl font-bold mb-2">
+              <h2 className="text-xl font-semibold text-gray-900 mb-6">
                 {produtoSelecionado.nome}
               </h2>
 
               <img
                 src={produtoSelecionado.imagem}
                 alt={produtoSelecionado.nome}
-                className="h-40 object-contain mb-4"
+                className="h-56 object-contain mx-auto mb-6"
               />
 
-              <p>Código: {produtoSelecionado.codigo}</p>
-
-              {produtoSelecionado.descricao && (
-                <p className="mt-2 text-sm text-gray-600">
-                  {produtoSelecionado.descricao}
-                </p>
-              )}
+              <p className="text-sm text-gray-600 mb-2">
+                Código: {produtoSelecionado.codigo}
+              </p>
+              <p className="mb-2">{produtoSelecionado?.descricao}</p>
+              <p className="text-lg font-bold">
+                R${" "}
+                {produtoSelecionado.preco
+                  ? formatPrice(produtoSelecionado.preco)
+                  : "R$ 0,00"}
+              </p>
             </>
           )}
         </Modal>

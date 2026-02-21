@@ -55,7 +55,7 @@ export const Modal = ({ isOpen, onClose, children }: ModalProps) => {
         {children}
 
         <div className="mt-6 flex justify-end">
-          <SimpleButton type="button" onClick={onClose} variant="danger">
+          <SimpleButton type="button" onClick={onClose} variant="primary">
             Fechar
           </SimpleButton>
         </div>
