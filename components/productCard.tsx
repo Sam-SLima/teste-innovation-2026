@@ -22,12 +22,10 @@ export const ProductCard = ({ produto, onOpen }: Props) => {
 
   return (
     <div className="relative bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-all duration-200 p-5 flex flex-col">
-      {/* Badge */}
       <span className="absolute top-3 left-3 text-[10px] font-bold text-cyan-600">
         EXCLUSIVO!
       </span>
 
-      {/* Favorito */}
       <button
         type="button"
         onClick={() => toggleFavorito(produto.codigo)}
@@ -36,7 +34,6 @@ export const ProductCard = ({ produto, onOpen }: Props) => {
         {isFavorito ? <Favorite /> : <FavoriteBorderOutlined />}
       </button>
 
-      {/* Imagem */}
       <div className="h-40 flex items-center justify-center mb-4">
         <img
           src={produto.imagem}
@@ -45,20 +42,16 @@ export const ProductCard = ({ produto, onOpen }: Props) => {
         />
       </div>
 
-      {/* Nome */}
       <h2 className="text-sm font-medium text-gray-800 line-clamp-2 mb-2">
         {produto.nome}
       </h2>
 
-      {/* Código */}
       <p className="text-xs text-gray-500 mb-2">{produto.codigo}</p>
 
-      {/* Preço */}
       <p className="text-base font-bold text-gray-900 mb-4">
         {formatPrice(produto.preco)}
       </p>
 
-      {/* Botão */}
       <button
         type="button"
         onClick={onOpen}

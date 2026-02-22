@@ -1,6 +1,7 @@
 "use client";
 
 import { Email, Phone } from "@mui/icons-material";
+import { LogoutButton } from "./logoutButton";
 
 export const Header = () => {
   return (
@@ -40,6 +41,7 @@ export const Header = () => {
             <p className="font-semibold">Ana Carol Machado</p>
             <p className="text-xs">Quarta, 23/09/2020</p>
           </div>
+          <LogoutButton />
         </div>
       </div>
     </header>

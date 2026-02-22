@@ -12,7 +12,7 @@ const SimpleButton = forwardRef<HTMLButtonElement, ButtonProps>(
     ref,
   ) => {
     const variants = {
-      primary: "bg-[#7ab52f] text-white hover:bg-[#7ab52f]",
+      primary: "bg-[#8DC63F] text-white hover:bg-[#7ab52f]",
       secondary: "bg-white text-gray-900 hover:bg-white",
       danger: "bg-red-600 text-white-900 hover:bg-red-700",
     };
