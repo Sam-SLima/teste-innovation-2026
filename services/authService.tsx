@@ -6,7 +6,6 @@ interface LoginPayload {
 }
 
 export const loginRequest = async (data: LoginPayload) => {
-  console.log("DADOS ENVIADOS:", data);
   const response = await api.post("/api/innova-dinamica/login/acessar", data);
 
   return response.data;

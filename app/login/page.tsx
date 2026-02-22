@@ -25,9 +25,6 @@ const LoginPage = () => {
     mutate(
       { email, senha },
       {
-        retry: 2,
-        retryDelay: (attempt: number) => Math.min(1000 * 2 ** attempt, 4000),
-
         onSuccess: (data) => {
           if (Number(data.status) === 1) {
             setAuth(data.token_de_acesso, data.dados_usuario);
